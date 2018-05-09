@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Vega.Persistance;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace Vega
 {
@@ -14,6 +17,7 @@ namespace Vega
     {
         public Startup(IConfiguration configuration)
         {
+            // rejestrowanie konfiguracji (inaczej niż w kursie)
             Configuration = configuration;
         }
 
@@ -22,6 +26,9 @@ namespace Vega
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper();
+            // register service for connecting to db
+            services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             // dependency injection - register services with interface and implementation
             services.AddMvc();
         }
