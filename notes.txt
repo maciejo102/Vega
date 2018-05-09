@@ -1,0 +1,7 @@
+1. dotnet new angular, npm install, dotnet add package: MicrosoftEntityFrameworkCore tools + sqlserver, dotnet watch (DotNetCliToolReference in csproj). remember dotnet restore
+2. add data classes, add persistence classes: DbContext, register service in Startup and add connection string to configuration
+3. dotnet ef migrations add InitialModel, ... add ApplyConstraints, ...Add SeedDatabase, dotnet ef database upgrade (to downgrade: upgrade with migrationName or witho 0 if current migration is first migration)
+4. Create Controler with Api. Api with proper attribute, inject context in constructor, api method - async: returning Task<T>, key word await
+5. Create resource classes (eg. to avoid looping), map these classes in api, create MappingProfile
+
+packages: MicrosoftEntityFrameworkCore, Dotnet Watch, dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 3.2.0, 
