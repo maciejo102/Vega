@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { VehicleService } from './services/vehicle.service';
+import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -16,7 +18,8 @@ import { CounterComponent } from './components/counter/counter.component';
         NavMenuComponent,
         CounterComponent,
         FetchDataComponent,
-        HomeComponent
+        HomeComponent,
+        VehicleFormComponent
     ],
     imports: [
         CommonModule,
@@ -27,9 +30,14 @@ import { CounterComponent } from './components/counter/counter.component';
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
+            {path: 'vehicles/new', component: VehicleFormComponent},
             { path: '**', redirectTo: 'home' }
         ])
+    ],
+    providers: [
+        VehicleService
     ]
+    
 })
 export class AppModuleShared {
 }
