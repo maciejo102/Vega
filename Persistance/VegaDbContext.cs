@@ -12,6 +12,7 @@ namespace Vega.Persistance
         }
 
         public DbSet<Make> Makes { get; set; } 
+        public DbSet<Feature> Features { get; set; }
         
         ///////////// stare podejście
         // public VegaDbContext(string connectionString)

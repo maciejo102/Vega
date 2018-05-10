@@ -9,7 +9,7 @@ namespace Vega.Mapping
         public MappingProfile()
         {
             CreateMap<Make, MakeResource>();
-            
+            CreateMap<Model, ModelResource>();
         }
     }
 }
