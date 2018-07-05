@@ -9,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
 
 export class VehicleFormComponent implements OnInit {
 
+  featureId: any;
   features: any[] = [];
   makes: any[] = [];
   models: any[] = [];
-  vehicle: any = {};
+  vehicle: any = {
+    features: [],
+    contact: {}
+  };
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -31,10 +35,35 @@ export class VehicleFormComponent implements OnInit {
   }
 
   onMakeChange(){
-    var selectedMake = this.makes.find(m => m.id == this.vehicle.make);
+    var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
     // for large amount of data, better way is to call for models separately to the server 
     // instead of load  all make objects in one request
     this.models = selectedMake ? selectedMake.models : [];
+    // delete modelId when changing make
+    delete this.vehicle.modelId;
+  }
+
+  onFeatureToggle(featureId: any, $event: any) {
+    if ($event.target.checked){
+      this.vehicle.features.push(featureId);
+    }
+    else {
+      var index = this.vehicle.features.indexOf(featureId);
+      this.vehicle.features.splice(index, 1);
+    }
+  }
+
+  submit() {
+    this.vehicleService.create(this.vehicle)
+      .subscribe(
+        // success scenario
+        x => console.log(x),
+        // error scenario
+        err => {
+          console.log(err)
+        }
+      );
+
   }
 
 }
