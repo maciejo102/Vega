@@ -1,7 +1,4 @@
 <h1>New Vehicle</h1>
-<p>
-  {{ vehicle | json }}
-</p>
 <!-- validation of whole form #f="ngForm" -->
 <form (ngSubmit)="submit()" #f="ngForm">
   <div class="form-group">
@@ -16,7 +13,7 @@
       <option *ngFor="let m of makes" value="{{m.id}}">{{m.name}}</option>
     </select>
   </div>
-  <div class="alert alert-danger" *ngIf="make.touched && !make.isValid">Please select make.</div>
+  <div class="alert alert-danger" *ngIf="make.touched && !make.valid">Please select make.</div>
   <div class="form-group">
     <label for="model">Model</label>
     <select id="model" class="form-control" [(ngModel)]="vehicle.modelId" name="modelId" required #model="ngModel">
@@ -24,7 +21,7 @@
       <option *ngFor="let m of models" value="{{m.id}}">{{m.name}}</option>
     </select>
   </div>
-  <div class="alert alert-danger" *ngIf="model.touched && !model.isValid">Please select model.</div>
+  <div class="alert alert-danger" *ngIf="model.touched && !model.valid">Please select model.</div>
   <p>Is this vehicle registered?</p>
   <label for="registered" class="radio-inline">
     <input type="radio" name="isRegistered" id="registered" value="true" [(ngModel)]="vehicle.isRegistered" > Yes <!-- need to set name of the group of radios -->
@@ -42,19 +39,19 @@
   <h2>Contact</h2>
   <div class="form-group">
     <label for="contactName">Name</label>
-    <input id="contactName" type="text" class="form-control" [(ngModel)]="vehicle.contact.name" name="contactName" #contactName="ngModel">
+    <input id="contactName" type="text" class="form-control" [(ngModel)]="vehicle.contact.name" name="contactName" required #contactName="ngModel">
   </div>
-  <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.isValid">Please enter contact name.</div>
+  <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please enter contact name.</div>
   <div class="form-group">
     <label for="contactPhone">Phone</label>
-    <input id="contactPhone" type="text" class="form-control" [(ngModel)]="vehicle.contact.phone" name="contactPhone" #contactPhone="ngModel">
+    <input id="contactPhone" type="text" class="form-control" [(ngModel)]="vehicle.contact.phone" name="contactPhone" required #contactPhone="ngModel">
   </div>
-  <div class="alert alert-danger" *ngIf="contactPhone.touched && !contactPhone.isValid">Please enter contact phone.</div>
+  <div class="alert alert-danger" *ngIf="contactPhone.touched && !contactPhone.valid">Please enter contact phone.</div>
   <div class="form-group">
     <label for="contactName">Email</label>
-    <input id="contactName" type="text" class="form-control" [(ngModel)]="vehicle.contact.email" name="contactEmail" #contactEmail="ngModel">
+    <input id="contactName" type="text" class="form-control" [(ngModel)]="vehicle.contact.email" name="contactEmail" required #contactEmail="ngModel">
   </div>
-  <div class="alert alert-danger" *ngIf="contactEmail.touched && !contactEmail.isValid">Please enter contact email.</div>
+  <div class="alert alert-danger" *ngIf="contactEmail.touched && !contactEmail.valid">Please enter contact email.</div>
   <!-- attribute binding -->
-  <button class="btn btnprimary" [disabled]="!isValid">Save</button>
+  <button class="btn btnprimary" [disabled]="!f.valid">Save</button>
 </form>
