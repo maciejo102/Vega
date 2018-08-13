@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Vega.Controllers.Resources;
 using Vega.Contract.Models;
 using Vega.Contract;
+using System.Collections.Generic;
 
 namespace Vega.Controllers
 {
-    [Route("/api/vehicles")]
-    public class VehiclesController : Controller
+    [Route("/api/vehicles/")]
+    public class VehiclesRestService : Controller
     {
-        public VehiclesController(IMapper mapper, IVehicleDao vehicleDao, IUnitOfWork unitOfWork)
+        public VehiclesRestService(IMapper mapper, IVehicleDao vehicleDao, IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
             this.vehicleDao = vehicleDao;
@@ -96,6 +97,16 @@ namespace Vega.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IEnumerable<VehicleResource>> GetAllVehicles(FilterResource filterResource)
+        {
+            var filter = mapper.Map<FilterResource, Filter>(filterResource);
+            var vehicles = await vehicleDao.GetAllVehicles(filter);
+            
+            var result = mapper.Map<IEnumerable<Vehicle>, IEnumerable<VehicleResource>>(vehicles);
+
+            return result;
+        }
 
         private readonly IMapper mapper;
         private readonly IVehicleDao vehicleDao;

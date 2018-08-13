@@ -9,11 +9,11 @@ using Vega.Persistance;
 
 namespace Vega.Controllers
 {
-    public class MakesController : Controller
+    public class MakesRestService : Controller
     {
         private readonly VegaDbContext context;
         private readonly IMapper mapper;
-        public MakesController(VegaDbContext context, IMapper mapper)
+        public MakesRestService(VegaDbContext context, IMapper mapper)
         {
             this.mapper = mapper;
             this.context = context;

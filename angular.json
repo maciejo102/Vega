@@ -21,7 +21,7 @@
               "ClientApp/favicon.ico"
             ],
             "styles": [
-              "ClientApp/styles.css"
+              "ClientApp/styles.scss"
             ],
             "scripts": []
           },

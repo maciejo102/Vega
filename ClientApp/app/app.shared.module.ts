@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
+import { AppErrorHandler } from './components/app/app.error-handler';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import * as Raven from 'raven-js';
 
 import { VehicleService } from './services/vehicle.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
@@ -11,6 +13,11 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+
+Raven
+  .config('https://09405f64e6a74cc5adcfc0cf740084d4@sentry.io/1260893')
+  .install();
 
 @NgModule({
     declarations: [
@@ -19,22 +26,26 @@ import { CounterComponent } from './components/counter/counter.component';
         CounterComponent,
         FetchDataComponent,
         HomeComponent,
-        VehicleFormComponent
+        VehicleFormComponent,
+        VehicleListComponent
     ],
     imports: [
         CommonModule,
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
-            {path: 'vehicles/new', component: VehicleFormComponent},
-            { path: '**', redirectTo: 'home' }
+            { path: 'vehicles', component: VehicleListComponent },
+            { path: 'vehicles/new', component: VehicleFormComponent },
+            { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: '**', redirectTo: 'home,' }
         ])
     ],
     providers: [
+        {provide: ErrorHandler, useClass: AppErrorHandler },
         VehicleService
     ]
     

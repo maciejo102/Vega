@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vega.Contract.Models;
 
@@ -7,6 +8,7 @@ namespace Vega.Contract
     {
         void Add(Vehicle vehicle);
         Task<Vehicle> GetVehicleDbData(int id, bool includeRelated = true);
+        Task<IEnumerable<Vehicle>> GetAllVehicles(Filter filter);
         void Remove(Vehicle vehicle);
     }
 }
