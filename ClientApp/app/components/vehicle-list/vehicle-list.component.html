@@ -19,8 +19,8 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="make">Model</label>
-        <select id="make" class="form-control" [(ngModel)]="filter.modelid" (change)="onFilterChange()" >
+        <label for="model">Model</label>
+        <select id="model" class="form-control" [(ngModel)]="filter.modelid" (change)="onFilterChange()" >
           <option value=""></option>
           <option *ngFor="let m of models" value="{{ m.id }}">{{ m.name }}</option>
       

@@ -35,6 +35,16 @@ export class VehicleListComponent implements OnInit {
   this.populateVehicles();
   }
 
+  
+  showVehicle(id: number) {
+    this.router.navigate(["/vehicles/" + id]);
+  }
+  
+  resetFilter(){
+    this.filter = {};
+    this.onFilterChange();
+  }
+  
   onFilterChange() {
     
     this.onMakeChange();
@@ -51,15 +61,7 @@ export class VehicleListComponent implements OnInit {
 
     //   this.vehicles = vehicles;
   }
-  
-  showVehicle(id: number) {
-    this.router.navigate(["/vehicles/" + id]);
-  }
-  
-  resetFilter(){
-    this.filter = {};
-    this.onFilterChange();
-  }
+
   
   private populateVehicles() {
     this.vehicleService.getAll(this.filter)
