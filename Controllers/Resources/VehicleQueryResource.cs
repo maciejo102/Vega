@@ -1,8 +1,10 @@
 namespace Vega.Controllers.Resources
 {
-    public class FilterResource
+    public class VehicleQueryResource
     {
         public int? MakeID { get; set; }
         public int? ModelId { get; set; }
+        public string SortBy { get; set; }
+        public bool IsSortingAscending { get; set; }
     }
 }

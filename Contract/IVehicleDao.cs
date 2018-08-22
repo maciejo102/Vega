@@ -8,7 +8,7 @@ namespace Vega.Contract
     {
         void Add(Vehicle vehicle);
         Task<Vehicle> GetVehicleDbData(int id, bool includeRelated = true);
-        Task<IEnumerable<Vehicle>> GetAllVehicles(Filter filter);
+        Task<IEnumerable<Vehicle>> GetAllVehicles(VehicleQuery filter);
         void Remove(Vehicle vehicle);
     }
 }
