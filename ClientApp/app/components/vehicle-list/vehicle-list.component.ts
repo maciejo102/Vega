@@ -12,9 +12,16 @@ export class VehicleListComponent implements OnInit {
 
   vehicles: Vehicle[] = []
   makes: any[] = []
-  filter: any = {}
+  query: any = {}
   models: any;
-
+  columns = [
+    { title: 'Id' }, 
+    { title: 'Make', key: 'make', isSortable: true },
+    { title: 'Model', key: 'model', isSortable: true },
+    { title: 'Contact Name', key: 'contactName', isSortable: true },
+    { }
+  ]
+  
   // #filtering on client side
   // allVehicles: Vehicle[] = [];
 
@@ -41,7 +48,7 @@ export class VehicleListComponent implements OnInit {
   }
   
   resetFilter(){
-    this.filter = {};
+    this.query = {};
     this.onFilterChange();
   }
   
@@ -64,16 +71,28 @@ export class VehicleListComponent implements OnInit {
 
   
   private populateVehicles() {
-    this.vehicleService.getAll(this.filter)
+    this.vehicleService.getAll(this.query)
     .subscribe(v =>{
       this.vehicles =  v
     });
   }
 
   private onMakeChange(){
-    var selectedMake = this.makes.find(m => m.id == this.filter.makeId);
+    var selectedMake = this.makes.find(m => m.id == this.query.makeId);
   
     this.models = selectedMake ? selectedMake.models : [];
-    delete this.filter.modelId;
+    delete this.query.modelId;
+    }
+
+    sortBy(columnName: any) {
+      if (this.query.sortBy === columnName) {
+        this.query.isSortingAscending = !this.query.isSortingAscending;
+      }
+      else {
+        this.query.sortBy = columnName;
+        this.query.isSortingAscending = true;
+      }
+
+      this.populateVehicles();
     }
 }
