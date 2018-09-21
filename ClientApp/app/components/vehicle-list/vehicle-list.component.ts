@@ -1,4 +1,4 @@
-import { Vehicle, KeyValuePair } from './../../models/vehicle';
+import { Vehicle } from './../../models/vehicle';
 import { VehicleService } from './../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
@@ -10,10 +10,15 @@ import { Router } from '../../../../node_modules/@angular/router';
 })
 export class VehicleListComponent implements OnInit {
 
-  vehicles: Vehicle[] = []
+  private readonly PageSize = 5;
+
+  queryResult: any = {}
   makes: any[] = []
-  query: any = {}
+  query: any = {
+    pageSize: this.PageSize
+  };
   models: any;
+  
   columns = [
     { title: 'Id' }, 
     { title: 'Make', key: 'make', isSortable: true },
@@ -21,7 +26,7 @@ export class VehicleListComponent implements OnInit {
     { title: 'Contact Name', key: 'contactName', isSortable: true },
     { }
   ]
-  
+
   // #filtering on client side
   // allVehicles: Vehicle[] = [];
 
@@ -48,14 +53,17 @@ export class VehicleListComponent implements OnInit {
   }
   
   resetFilter(){
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PageSize
+    };
+    this.populateVehicles();
   }
   
   onFilterChange() {
     
     this.onMakeChange();
-    this.populateVehicles();
+    this.onPageChanged(1);
 
     // #filtering on client side
     // var vehicles = this.allVehicles;
@@ -69,12 +77,14 @@ export class VehicleListComponent implements OnInit {
     //   this.vehicles = vehicles;
   }
 
+  onPageChanged(page: number) {
+    this.query.page = page;
+    this.populateVehicles();
+  }
   
   private populateVehicles() {
-    this.vehicleService.getAll(this.query)
-    .subscribe(v =>{
-      this.vehicles =  v
-    });
+    this.vehicleService.getVehicles(this.query)
+    .subscribe(result => this.queryResult = result);
   }
 
   private onMakeChange(){

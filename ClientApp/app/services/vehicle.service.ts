@@ -9,7 +9,7 @@ export class VehicleService {
   
   private readonly vehiclesEndpoint = "/api/vehicles/"
 
-  getAll(filter: string) {
+  getVehicles(filter: string) {
     
       return this.http.get(this.vehiclesEndpoint + "?" + this.toQueryString(filter))
         .map(response => response.json());
