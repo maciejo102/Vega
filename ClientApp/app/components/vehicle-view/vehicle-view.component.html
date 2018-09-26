@@ -1,0 +1,37 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#description">Description</a></li>
+  <li><a data-toggle="tab" href="#photos">Photos</a></li>
+</ul>
+
+<div class="tab-content" *ngIf=vehicle>
+
+  <!-- description -->
+    <div role="tabpanel" class="tab-pane active" id="description">
+      <h2>{{ vehicle.make.name }} {{ vehicle.model.name }}</h2>
+
+      <h3>Features</h3>
+      <ul *ngFor="let feature of vehicle.features">
+        <li>{{ feature.name }}</li>
+      </ul>
+
+      <h3>Other info</h3>
+      <p>Is car registered: {{ vehicle.isRegistered | yesNo }}
+
+      <h3>Contact info</h3>
+      <p>{{ vehicle.contact.name }}</p>
+      <p>{{ vehicle.contact.email }}</p>
+      <p>{{ vehicle.contact.phone }} </p>
+      
+      <button class="btn btn-primary" type="button" (click)="editVehicle()">Edit</button>
+      <button class="btn btn-danger" type="button" (click)="deleteVehicle()">Delete</button>
+      <button class="btn btn-default" type="button" (click)="goToVehicles()">Back to vehicles</button>
+    </div>
+    
+    <!-- photo -->
+    <div role="tabpanel" class="tab-pane" id="photos">
+      <h2>Photos</h2>
+      <input type="file" (change)="uploadPhoto()" #fileInput>
+    </div>
+</div>
+
+

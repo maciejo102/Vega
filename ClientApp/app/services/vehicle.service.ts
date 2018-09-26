@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class VehicleService {
-  constructor(private http: Http) { }
+  constructor(private http: Http) {}
   
   private readonly vehiclesEndpoint = "/api/vehicles/"
 

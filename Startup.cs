@@ -11,6 +11,7 @@ using Vega.Persistance;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Vega.Contract;
+using Vega.Contract.Models;
 
 namespace Vega
 {
@@ -27,6 +28,7 @@ namespace Vega
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));   
             services.AddScoped<IVehicleDao, VehicleDao>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

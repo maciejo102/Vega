@@ -32,10 +32,13 @@ namespace Vega.Contract.Models
 
         public ICollection<VehicleFeature> Features { get; set; }
 
+        public ICollection<Photo> Photos { get; set; }
+
         // always initialize collection properties
         public Vehicle()
         {
             Features = new Collection<VehicleFeature>();
+            Photos = new Collection<Photo>();
         }
     }
 }

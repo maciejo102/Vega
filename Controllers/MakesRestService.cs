@@ -11,8 +11,6 @@ namespace Vega.Controllers
 {
     public class MakesRestService : Controller
     {
-        private readonly VegaDbContext context;
-        private readonly IMapper mapper;
         public MakesRestService(VegaDbContext context, IMapper mapper)
         {
             this.mapper = mapper;
@@ -25,5 +23,9 @@ namespace Vega.Controllers
             var makes = await context.Makes.Include(m => m.Models).ToListAsync();
             return mapper.Map<List<Make>, List<MakeResource>>(makes);
         }
+
+
+        private readonly VegaDbContext context;
+        private readonly IMapper mapper;
     }
 }

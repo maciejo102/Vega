@@ -33,17 +33,14 @@ export class VehicleFormComponent implements OnInit {
   };
 
   constructor(private vehicleService: VehicleService,
-private route: ActivatedRoute,
-private router: Router) {
+    private route: ActivatedRoute,
+    private router: Router) {
 
-  route.params.subscribe(params => {
-  this.vehicle.id = params['id'] as number
-});
-  
+  this.route.params.subscribe(params => this.vehicle.id = params['id'] as number);
  }
 
   ngOnInit() {
-    
+    // data from server [ makes, features, vehicle ]
     var sources =  [ this.vehicleService.getMakes(), this.vehicleService.getFeatures() ];
 
     if (this.vehicle.id)
@@ -91,42 +88,21 @@ private router: Router) {
   }
   
   submit() {
-    if (this.vehicle.id) 
-      this.updateVehicle(this.vehicle);
-    else
-      this.saveVehicle(this.vehicle);
+    var result$ = (this.vehicle.id) ? this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle);
+    result$.subscribe(
+      v => {
+        console.log(v);
+        alert('Succesfully saved vehicle.');
+        this.router.navigate(['/vehicles/' + this.vehicle.id]);
+      }
+    );
 }
 
-deleteVehicle() {
-  if (confirm("Are you sure?")) {
-    this.vehicleService.delete(this.vehicle)
-      .subscribe(v => { 
-        this.router.navigate(["/home"]);
-        alert('Vehicle deleted.')
-      });
-  }
-}
-
-
-private updateVehicle(vehicle: SaveVehicle){
-  this.vehicleService.update(vehicle)
-  .subscribe(
-    v => {
-      console.log(v);
-      alert('Succesfully modified vehicle.')
-    }
-  );
-}
-
-private saveVehicle(vehicle: SaveVehicle){
-  this.vehicleService.create(this.vehicle)
-  .subscribe(
-    // success scenario
-    v => {
-      console.log(v);
-      alert('Succesfully created vehicle.')
-    }
-  );
+goBack(){
+  if (this.vehicle.id)
+    this.router.navigate(['/vehicles/' + this.vehicle.id]);
+  else 
+  this.router.navigate(['/vehicles']);
 }
 
   private populateModels() {

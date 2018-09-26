@@ -1,3 +1,5 @@
+import { PhotoService } from './services/photo.service';
+import { YesNoPipe } from './components/shared/custom-pipes/yes-no.pipe';
 import { PaginationComponent } from './components/shared/pagination.component';
 import { AppErrorHandler } from './components/app/app.error-handler';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -15,6 +17,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import { VehicleViewComponent } from './components/vehicle-view/vehicle-view.component';
 
 Raven
   .config('https://09405f64e6a74cc5adcfc0cf740084d4@sentry.io/1260893')
@@ -23,6 +26,8 @@ Raven
 @NgModule({
     declarations: [
         AppComponent,
+        VehicleViewComponent,
+        YesNoPipe,
         NavMenuComponent,
         CounterComponent,
         FetchDataComponent,
@@ -42,13 +47,15 @@ Raven
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'vehicles', component: VehicleListComponent },
             { path: 'vehicles/new', component: VehicleFormComponent },
-            { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: 'vehicles/:id', component: VehicleViewComponent },
+            { path: 'vehicles/edit/:id', component: VehicleFormComponent },
             { path: '**', redirectTo: 'home,' }
         ])
     ],
     providers: [
         {provide: ErrorHandler, useClass: AppErrorHandler },
-        VehicleService
+        VehicleService,
+        PhotoService
     ]
     
 })

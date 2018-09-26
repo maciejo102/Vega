@@ -1,4 +1,3 @@
-import { Vehicle } from './../../models/vehicle';
 import { VehicleService } from './../../services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../../node_modules/@angular/router';
