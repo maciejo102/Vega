@@ -8,7 +8,7 @@ using Vega.Contract;
 using Vega.Contract.Models;
 using Vega.Extensions;
 
-namespace Vega.Persistance
+namespace Vega.Persistence
 {
     public class VehicleDao : IVehicleDao
     {
@@ -46,7 +46,6 @@ namespace Vega.Persistance
                         .Include(v => v.Features)
                             .ThenInclude(vf => vf.Feature)
                         .AsQueryable();
-
 
             // filtering
             if (queryObject.MakeId.HasValue)
