@@ -1,3 +1,4 @@
+<h1>Vehicle</h1 >
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#description">Description</a></li>
   <li><a data-toggle="tab" href="#photos">Photos</a></li>
@@ -31,6 +32,13 @@
     <div role="tabpanel" class="tab-pane" id="photos">
       <h2>Photos</h2>
       <input type="file" (change)="uploadPhoto()" #fileInput>
+      <button class="btn btn-danger" *ngIf="progress" type="button" (click)="deleteUpload()" >Cancel</button>
+      <div class="progress" *ngIf="progress && progress.percentage < 100">
+        <div class="progress-bar" [style.width]="progress.percentage + '%'">
+          <span class="sr-only">{{ progress.percentage }} & complete </span>
+        </div>
+      </div>
+      <img *ngFor="let photo of photos" src="/uploads/{{ photo.name }} " class="img-thumbnail">
     </div>
 </div>
 

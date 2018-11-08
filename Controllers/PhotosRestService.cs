@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -10,26 +11,35 @@ using Microsoft.Extensions.Options;
 using Vega.Contract;
 using Vega.Contract.Models;
 using Vega.Controllers.Resources;
-using Vega.Persistance;
+using Vega.Persistence;
 
 namespace Vega.Controllers
 {
     [Route("/api/vehicles/{vehicleId}/photos/")]
-    public class PhotosRestService : Controller
+    public class PhotoRestService : Controller
     {
-        public PhotosRestService(VegaDbContext context, 
+        public PhotoRestService(VegaDbContext context, 
             IMapper mapper, 
             IHostingEnvironment host,
             IVehicleDao vehicleDao,
             IUnitOfWork unitOfWork,
-            IOptionsSnapshot<PhotoSettings> photoOptions)
+            IOptionsSnapshot<PhotoSettings> photoOptions,
+            IPhotoDao photoDao)
         {
             this.host = host;
             this.vehicleDao = vehicleDao;
             this.unitOfWork = unitOfWork;
+            this.photoDao = photoDao;
             this.context = context;
             this.mapper = mapper;
             photoSettings = photoOptions.Value;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPhotos(int vehicleId) 
+        {
+            var photos = await photoDao.GetPhotosDbSet(vehicleId);
+            return Ok(mapper.Map<IEnumerable<Photo>, IEnumerable<PhotoResource>>(photos));
         }
 
         [HttpPost]
@@ -44,7 +54,7 @@ namespace Vega.Controllers
             if (file.Length == 0) return BadRequest("Empty file.");
             if (!photoSettings.IsSupported(file.FileName)) return BadRequest("Unsupported file type.");
             
-            
+            // save photo to localstorage
             var photosStoragePath = Path.Combine(host.WebRootPath, "uploads");
             if (!Directory.Exists(photosStoragePath))
                 Directory.CreateDirectory(photosStoragePath);
@@ -66,6 +76,7 @@ namespace Vega.Controllers
         private readonly IHostingEnvironment host;
         private readonly IVehicleDao vehicleDao;
         private readonly IUnitOfWork unitOfWork;
+        private readonly IPhotoDao photoDao;
         private readonly IMapper mapper;
         private readonly DbContext context;
         private readonly PhotoSettings photoSettings;

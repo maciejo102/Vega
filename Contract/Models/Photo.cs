@@ -9,5 +9,7 @@ namespace Vega.Contract.Models
         [Required]
         [MaxLength(255)]
         public string Name { get; set; }
+
+        public int VehicleId { get; set; }
     }
 }
